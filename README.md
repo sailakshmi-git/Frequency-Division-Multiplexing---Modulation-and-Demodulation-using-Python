@@ -32,6 +32,72 @@ __Procedure__:
 
 7 — Demodulate each isolated channel (coherent) and low-pass filter to recover baseband
 
-__Output_:
+__Program__:
+
+```
+clc;
+clear;
+close;
+
+Ac = 7.4;
+Am = 3.7;
+
+Fm1 = 166;
+Fm2 = 140;
+
+Fc1 = 1660;
+Fc2 = 1400;
+
+Fs = 16600;
+
+t = 0:1/Fs:0.01;
+
+// Message signals
+m1 = Am*sin(2*%pi*Fm1*t);
+m2 = Am*sin(2*%pi*Fm2*t);
+
+subplot(5,1,1)
+plot(t,m1)
+title("Message Signal 1")
+
+subplot(5,1,2)
+plot(t,m2)
+title("Message Signal 2")
+
+// Modulated signals
+s1 = (Ac + m1).*sin(2*%pi*Fc1*t);
+s2 = (Ac + m2).*sin(2*%pi*Fc2*t);
+
+subplot(5,1,3)
+plot(t,s1)
+title("Modulated Signal 1")
+
+subplot(5,1,4)
+plot(t,s2)
+title("Modulated Signal 2")
+
+// FDM signal
+fdm = s1 + s2;
+
+subplot(5,1,5)
+plot(t,fdm)
+title("FDM Signal")
+
+xgrid();
+```
+__Output graph__:
+
+<img width="1080" height="844" alt="image" src="https://github.com/user-attachments/assets/f422e231-0263-48d3-89d6-d501b0e3d111" />
+
+<img width="1080" height="834" alt="image" src="https://github.com/user-attachments/assets/52a2bb3d-4f0a-47b5-89ba-6703617cad3f" />
+
+<img width="1080" height="851" alt="image" src="https://github.com/user-attachments/assets/75c5e086-cfe9-4b84-a5a5-5ef50aea8f94" />
+
+
+__Calculation__:
+
+<img width="1080" height="1237" alt="image" src="https://github.com/user-attachments/assets/3c1f7256-4885-4d42-bfe2-24d270787f9f" />
 
 __Result__:
+
+Six different message signals were generated and modulated using FDM. All modulated signals were added to form a multiplexed FDM signal. Each message was successfully recovered using coherent demodulation followed by low-pass filtering. The plots confirmed accurate multiplexing and demultiplexing.
